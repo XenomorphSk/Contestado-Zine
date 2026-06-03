@@ -1,0 +1,342 @@
+:root {
+  --primary: #1e293b;
+  --accent: #2563eb;
+  --bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --text-light: #64748b;
+  --nav-bg: #ffffff;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--nav-bg);
+  height: 90px; /* Increased navbar height to accommodate larger logo */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.nav-brand img {
+  height: 60px; /* Increased logo height */
+  width: auto; /* Allow width to adjust automatically to maintain aspect ratio */
+  object-fit: contain; /* Use 'contain' to ensure the entire image is visible within the bounds */
+  border-radius: 6px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center; /* Align items vertically */
+}
+
+.nav-item {
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem; /* Add padding for better click area */
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--accent);
+}
+
+.nav-item.button {
+  background-color: var(--accent);
+  color: white;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+
+.nav-item.button:hover {
+  background-color: #1a56cc; /* Darken accent color */
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--primary), #37474f);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+}
+
+/* Search Area */
+.search-container {
+  background: white;
+  padding: 3rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-wrapper input:focus {
+  border-color: var(--accent);
+}
+
+/* Main Content Layout */
+.main-layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  gap: 2rem;
+}
+
+.main-content {
+  flex: 3; /* Takes more space */
+}
+
+.sidebar {
+  flex: 1; /* Takes less space */
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  height: fit-content; /* Adjusts height to content */
+}
+
+.sidebar h3 {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  display: flex; /* Make list items flex to align image and text */
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sidebar li img {
+  width: 30px; /* Size for partner images */
+  height: 30px;
+  border-radius: 50%; /* Circular images */
+  object-fit: cover;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content Sections */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.section-header h2 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+/* Cards */
+.media-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+  overflow: hidden; /* Ensure content stays within borders */
+}
+
+.media-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.media-cover {
+  width: 100%;
+  height: 200px; /* Fixed height for covers */
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+
+.media-info {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  background: #f1f5f9;
+  color: var(--text-light);
+  border-radius: 4px;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.livro-tag { background: #e0f2fe; color: #0284c7; } /* More vibrant blue */
+.zine-tag { background: #fffbeb; color: #d97706; } /* More vibrant orange */
+
+.media-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.media-footer {
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Biography Section */
+.biography-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.biography-section h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.biography-section p {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+  }
+  .nav-links {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .main-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    margin-top: 2rem;
+    width: 100%; /* Full width on small screens */
+  }
+}
