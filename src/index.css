@@ -1,13 +1,15 @@
 :root {
-  --primary: #1e293b;
-  --accent: #2563eb;
-  --bg: #f1f5f9;
-  --card-bg: #ffffff;
-  --text: #0f172a;
-  --text-light: #64748b;
-  --nav-bg: #ffffff;
-  --border: #e2e8f0;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --primary: #8B0000; /* Dark Red - Similar to example */
+  --accent: #B22222; /* Slightly lighter red for accents */
+  --bg: #F8F8F8; /* Off-white for main content background */
+  --card-bg: #FFFFFF; /* White for cards */
+  --text: #333333; /* Dark text */
+  --text-light: #666666; /* Lighter text for metadata */
+  --nav-bg: var(--primary); /* Navbar background is dark red */
+  --border: #E0E0E0; /* Light gray border */
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  --header-height: 120px; /* Adjust header height */
+  --footer-height: 100px; /* Adjust footer height */
 }
 
 * {
@@ -17,186 +19,148 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'Roboto', sans-serif; /* A more common, modern sans-serif */
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.6;
 }
 
-/* Navbar */
-.navbar {
-  background: var(--nav-bg);
-  height: 90px; /* Increased navbar height to accommodate larger logo */
+/* Global Container for Centered Content */
+.global-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.header-top {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-top .tagline {
+  font-size: 1.2rem; /* Larger font size */
+  font-weight: 700; /* Bolder */
+  color: white;
+  text-shadow: 
+    1px 1px 2px rgba(255,0,0,0.5), /* Basic shadow */
+    1px 3px 3px rgba(255,0,0,0.4), /* Slightly drippy */
+    1px 5px 4px rgba(255,0,0,0.3); /* More drippy */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.header-top .tagline:hover {
+  text-shadow: 
+    1px 1px 3px rgba(255,0,0,0.7),
+    1px 5px 5px rgba(255,0,0,0.6),
+    1px 8px 6px rgba(255,0,0,0.5),
+    1px 12px 8px rgba(255,0,0,0.4); /* More pronounced dripping on hover */
+}
+
+
+.header-main {
+  background-color: white;
+  padding: 1.5rem 1rem; /* Increased padding to accommodate larger logo */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: var(--shadow);
   border-bottom: 1px solid var(--border);
 }
 
-.nav-brand {
+.header-main .logo-container {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: var(--primary);
-  font-weight: 800;
-  font-size: 1.25rem;
 }
 
-.nav-brand img {
-  height: 60px; /* Increased logo height */
-  width: auto; /* Allow width to adjust automatically to maintain aspect ratio */
-  object-fit: contain; /* Use 'contain' to ensure the entire image is visible within the bounds */
-  border-radius: 6px;
+.header-main .logo-container img {
+  height: 100px; /* Even larger logo */
+  width: auto;
+  object-fit: contain;
+  margin-right: 1rem;
+  filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.3)); /* Subtle shadow for prominence */
+}
+
+.header-main .search-bar {
+  position: relative;
+  width: 250px;
+}
+
+.header-main .search-bar input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.header-main .search-bar input:focus {
+  border-color: var(--accent);
+}
+
+/* Main Navigation */
+.navbar {
+  background: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: center; /* Center the nav items */
+  align-items: center;
+  height: 50px; /* Height for navigation bar */
+  box-shadow: var(--shadow);
 }
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
-  align-items: center; /* Align items vertically */
+  gap: 2rem;
 }
 
 .nav-item {
   text-decoration: none;
-  color: var(--text-light);
+  color: white;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: color 0.2s;
   cursor: pointer;
-  padding: 0.25rem 0.5rem; /* Add padding for better click area */
+  padding: 0.25rem 0.5rem;
 }
 
 .nav-item:hover, .nav-item.active {
   color: var(--accent);
 }
 
-.nav-item.button {
-  background-color: var(--accent);
-  color: white;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-}
-
-.nav-item.button:hover {
-  background-color: #1a56cc; /* Darken accent color */
-}
-
-/* Hero Section */
-.hero {
-  background: linear-gradient(135deg, var(--primary), #37474f);
-  color: white;
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-}
-
-.hero p {
-  font-size: 1.25rem;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  opacity: 0.9;
-}
-
-/* Search Area */
-.search-container {
-  background: white;
-  padding: 3rem 1rem;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-}
-
-.search-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.search-wrapper input {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  font-size: 1rem;
-  box-shadow: var(--shadow);
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.search-wrapper input:focus {
-  border-color: var(--accent);
-}
-
-/* Main Content Layout */
+/* Main Layout for Content */
 .main-layout {
-  display: flex;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 300px 1fr; /* Sidebar then Main Content */
+  grid-template-areas: "sidebar main-content"; /* Define areas */
   gap: 2rem;
+  padding: 2rem 0;
+  background-color: var(--bg); /* Main content area background */
 }
 
+@media (max-width: 992px) {
+  .main-layout {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+    grid-template-areas:
+      "sidebar" /* Sidebar on top */
+      "main-content"; /* Main content below sidebar */
+  }
+}
+
+/* Main Content Area */
 .main-content {
-  flex: 3; /* Takes more space */
-}
-
-.sidebar {
-  flex: 1; /* Takes less space */
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
+  grid-area: main-content; /* Assign main content to its area */
+  background-color: var(--card-bg);
   padding: 1.5rem;
-  height: fit-content; /* Adjusts height to content */
+  border-radius: 8px;
+  box-shadow: var(--shadow);
 }
 
-.sidebar h3 {
-  font-size: 1.2rem;
-  color: var(--primary);
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-}
-
-.sidebar ul {
-  list-style: none;
-}
-
-.sidebar li {
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-  color: var(--text);
-  display: flex; /* Make list items flex to align image and text */
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.sidebar li img {
-  width: 30px; /* Size for partner images */
-  height: 30px;
-  border-radius: 50%; /* Circular images */
-  object-fit: cover;
-}
-
-.sidebar a {
-  text-decoration: none;
-  color: var(--accent);
-}
-
-.sidebar a:hover {
-  text-decoration: underline;
-}
-
-/* Main Content Sections */
 .section-header {
   display: flex;
   align-items: center;
@@ -207,95 +171,139 @@ body {
 }
 
 .section-header h2 {
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-light);
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 3rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Cards */
+/* Media Cards */
 .media-card {
   background: var(--card-bg);
-  border-radius: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow);
-  overflow: hidden; /* Ensure content stays within borders */
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .media-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .media-cover {
   width: 100%;
-  height: 200px; /* Fixed height for covers */
+  height: 180px; /* Image height for cards */
   object-fit: cover;
-  border-bottom: 1px solid var(--border);
 }
 
 .media-info {
-  padding: 1.25rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .card-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
-  background: #f1f5f9;
+  padding: 0.3rem 0.6rem;
+  background: var(--bg);
   color: var(--text-light);
   border-radius: 4px;
   width: fit-content;
   margin-bottom: 0.5rem;
 }
 
-.livro-tag { background: #e0f2fe; color: #0284c7; } /* More vibrant blue */
-.zine-tag { background: #fffbeb; color: #d97706; } /* More vibrant orange */
+.livro-tag { background: #fee2e2; color: #b91c1c; } /* Light red */
+.zine-tag { background: #fef3c7; color: #d97706; } /* Orange */
 
 .media-title {
-  font-weight: 600;
-  font-size: 1.05rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   color: var(--primary);
+  margin-bottom: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 0.75rem;
 }
 
 .media-footer {
   margin-top: auto;
   font-size: 0.8rem;
   color: var(--text-light);
-  display: flex;
+}
+
+/* Sidebar - Nossos Amigos (now on left) */
+.sidebar {
+  grid-area: sidebar; /* Assign sidebar to its area */
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.sidebar h3 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+  display: flex; /* Make list items flex to align image and text */
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.sidebar li:last-child {
+  border-bottom: none;
+}
+
+.sidebar li img {
+  width: 40px; /* Slightly larger for better visibility */
+  height: 40px;
+  border-radius: 50%; /* Circular images */
+  object-fit: cover;
+  flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.sidebar li a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  display: block;
+}
+
+.sidebar li a:hover {
+  color: var(--accent);
 }
 
 /* Biography Section */
 .biography-section {
-  max-width: 800px;
-  margin: 3rem auto;
+  background-color: var(--card-bg);
   padding: 2rem;
-  background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: var(--shadow);
 }
 
@@ -307,36 +315,71 @@ body {
 }
 
 .biography-section p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--text);
   margin-bottom: 1rem;
-  line-height: 1.7;
+  line-height: 1.8;
+  text-align: justify;
 }
 
+/* Footer */
 footer {
+  background-color: var(--primary);
+  color: white;
+  padding: 2rem 1rem;
   text-align: center;
-  padding: 4rem 1rem;
-  color: var(--text-light);
   font-size: 0.9rem;
+  box-shadow: var(--shadow);
+  margin-top: 2rem; /* Add some space above footer */
 }
 
-/* Media Queries for Responsiveness */
+footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+footer a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .navbar {
+  .header-top {
     flex-direction: column;
-    height: auto;
-    padding: 1rem;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  .header-main {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+  .header-main .logo-container img {
+    height: 80px; /* Smaller logo on mobile */
+  }
+  .header-main .search-bar {
+    width: 100%;
+    max-width: 300px; /* Limit search bar width */
   }
   .nav-links {
-    margin-top: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1rem;
   }
   .main-layout {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar" /* Sidebar on top */
+      "main-content"; /* Main content below sidebar */
+    padding: 1rem;
   }
   .sidebar {
-    margin-top: 2rem;
-    width: 100%; /* Full width on small screens */
+    padding: 1rem;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Smaller cards on mobile */
   }
 }
