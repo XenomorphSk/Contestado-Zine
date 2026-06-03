@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions: # Adicionado bloco de permissões
+      contents: write # Concede permissão de escrita para o token do GITHUB_TOKEN
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -15,7 +17,7 @@ jobs:
       - name: Setup Node.js 
         uses: actions/setup-node@v3
         with:
-          node-version: 20 # Atualizado para Node.js 20
+          node-version: 20 # Ou a versão que você usou localmente (ex: 16, 20)
           cache: "npm"
 
       - name: Install dependencies 
