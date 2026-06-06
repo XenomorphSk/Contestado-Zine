@@ -211,25 +211,20 @@ function App() {
           >
             BIOGRAFIA
           </span>
-          {currentPage === 'home' && (
-            <>
-              <span 
-                className={`nav-item ${activeFilter === 'Zine' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('Zine')}
-              >
-                CONTESTADO ZINE
-              </span>
-              <span 
-                className={`nav-item ${activeFilter === 'Livro' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('Livro')}
-              >
-                LIVROS
-              </span>
-              {/* These would typically be separate pages/filters in a real app */}
-              <span className="nav-item" onClick={() => alert('Contos em breve!')}>CONTOS</span>
-              <span className="nav-item" onClick={() => alert('Incontestado em breve!')}>INCONTESTADO</span>
-            </>
-          )}
+          <span 
+            className={`nav-item ${currentPage === 'home' && activeFilter === 'Zine' ? 'active' : ''}`}
+            onClick={() => { setCurrentPage('home'); setActiveFilter('Zine'); }}
+          >
+            CONTESTADO ZINE
+          </span>
+          <span 
+            className={`nav-item ${currentPage === 'home' && activeFilter === 'Livro' ? 'active' : ''}`}
+            onClick={() => { setCurrentPage('home'); setActiveFilter('Livro'); }}
+          >
+            LIVROS
+          </span>
+          <span className="nav-item" onClick={() => alert('Contos em breve!')}>CONTOS</span>
+          <span className="nav-item" onClick={() => alert('Incontestado em breve!')}>INCONTESTADO</span>
           <a href="mailto:leobrulantu@gmail.com" className="nav-item">CONTATO</a>
         </div>
       </nav>
