@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import data from './data.json'
 import './index.css'
 
@@ -25,6 +25,20 @@ function App() {
   const [search, setSearch] = useState('')
   const [activeFilter, setActiveFilter] = useState<'Todos' | MediaType | 'Contos' | 'Incontestado'>('Todos')
   const [currentPage, setCurrentPage] = useState<'home' | 'biography'>('home')
+  const [currentPhrase, setCurrentPhrase] = useState(0)
+
+  const phrases = useMemo(() => [
+    "Desde 2002 cutucando feridas",
+    "Escritos que não se curvam",
+    "Leia no Contestado Zine"
+  ], [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentPhrase((prev) => (prev + 1) % phrases.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [phrases.length])
 
   const allMedia: MediaItem[] = useMemo(() => {
     // Process data.docs from data.json
@@ -178,21 +192,23 @@ function App() {
   return (
     <div>
       <div className="header-top">
-        <span className="tagline">Desde 2002 apontando o dedinho sujo na cara dos Hipócritas</span>
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Pesquisar..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <div className="global-container">
+          <div className="search-bar">
+            <input 
+              type="text" 
+              placeholder="Pesquisar..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
       <div className="header-main">
-        <div className="global-container" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <div className="global-container">
           <div className="logo-container">
             <img src="/Contestado-Zine/logofoda.jpeg" alt={DEFAULT_LOGO_ALT} />
+            <span className="tagline">Desde 2002 apontando o dedinho sujo na cara dos Hipócritas</span>
           </div>
         </div>
       </div>
@@ -228,6 +244,30 @@ function App() {
           <a href="mailto:leobrulantu@gmail.com" className="nav-item">CONTATO</a>
         </div>
       </nav>
+
+      {currentPage === 'home' && (
+        <div className="carousel-container">
+          <div className="carousel-track">
+            {phrases.map((phrase, index) => (
+              <div 
+                key={index} 
+                className={`carousel-slide ${index === currentPhrase ? 'active' : ''}`}
+              >
+                <h2>{phrase}</h2>
+              </div>
+            ))}
+          </div>
+          <div className="carousel-dots">
+            {phrases.map((_, index) => (
+              <span 
+                key={index} 
+                className={`dot ${index === currentPhrase ? 'active' : ''}`}
+                onClick={() => setCurrentPhrase(index)}
+              ></span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {currentPage === 'home' ? renderHome() : renderBiography()}
 
