@@ -207,7 +207,7 @@ function App() {
       <div className="header-main">
         <div className="global-container">
           <div className="logo-container">
-            <img src="/Contestado-Zine/logofoda.jpeg" alt={DEFAULT_LOGO_ALT} />
+            <img src={`${import.meta.env.BASE_URL}logofoda.jpeg`} alt={DEFAULT_LOGO_ALT} />
             <span className="tagline">Desde 2002 apontando o dedinho sujo na cara dos Hipócritas</span>
           </div>
         </div>
@@ -273,7 +273,7 @@ function App() {
 
       <footer>
         <div className="global-container">
-          <img src="/Contestado-Zine/logofoda.jpeg" alt={DEFAULT_LOGO_ALT} style={{height: '50px', marginBottom: '1rem'}} />
+          <img src={`${import.meta.env.BASE_URL}logofoda.jpeg`} alt={DEFAULT_LOGO_ALT} style={{height: '50px', marginBottom: '1rem'}} />
           <p>&copy; {new Date().getFullYear()} Contestadozine. Todos os direitos reservados.</p>
           <p>
             <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a>
