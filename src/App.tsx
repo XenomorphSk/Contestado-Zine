@@ -73,7 +73,7 @@ function App() {
       .map((item: any) => ({ 
         name: item.name, 
         type: 'Zine' as MediaType, 
-        path: item.path.startsWith('assets/') ? item.path : `assets/docs/${item.name}`,
+        path: item.path,
         cover: item.cover || PLACEHOLDER_COVER,
         synopsis: item.synopsis 
       }))
@@ -82,7 +82,7 @@ function App() {
     const livros = data.livros.map((item: any) => ({ 
       name: item.name, 
       type: 'Livro' as MediaType, 
-      path: item.path.startsWith('assets/') ? item.path : `assets/livros/${item.name}`,
+      path: item.path,
       cover: item.cover || PLACEHOLDER_COVER,
       synopsis: item.synopsis 
     }))
