@@ -67,10 +67,6 @@ function App() {
   }, [phrases.length])
 
   const allMedia: MediaItem[] = useMemo(() => {
-    const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
-      ? import.meta.env.BASE_URL 
-      : `${import.meta.env.BASE_URL}/`;
-
     // Process data.docs from data.json
     const docs = data.docs
       .filter((item: any) => item.path.endsWith('.pdf')) // Ensure only PDFs are indexed as Zines
