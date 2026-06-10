@@ -9,7 +9,8 @@ interface MediaItem {
   name: string
   type: MediaType
   path: string
-  cover?: string // Optional cover image path
+  cover?: string 
+  synopsis?: string // Added synopsis field
 }
 
 interface FriendItem {
@@ -22,11 +23,36 @@ const PLACEHOLDER_COVER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
 const PLACEHOLDER_FRIEND_IMAGE = "https://via.placeholder.com/50?text=Amigo"; // Generic placeholder for friend images
 const DEFAULT_LOGO_ALT = "Logo Contestadozine"; // Alt text for the main logo
 
+const getBookCoverStyle = (name: string) => {
+  const colors = [
+    '#4a148c', '#1a237e', '#01579b', '#004d40', '#1b5e20', 
+    '#33691e', '#827717', '#f57f17', '#ff6f00', '#e65100', 
+    '#bf360c', '#3e2723', '#212121', '#263238'
+  ];
+  const index = name.length % colors.length;
+  return {
+    backgroundColor: colors[index],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    textAlign: 'center' as const,
+    color: 'white',
+    fontSize: '0.9rem',
+    fontWeight: 'bold',
+    textTransform: 'uppercase' as const,
+    height: '180px',
+    borderBottom: '4px solid rgba(0,0,0,0.2)',
+    boxShadow: 'inset 0 0 40px rgba(0,0,0,0.3)'
+  };
+};
+
 function App() {
   const [search, setSearch] = useState('')
   const [activeFilter, setActiveFilter] = useState<'Todos' | MediaType | 'Contos' | 'Incontestado'>('Todos')
   const [currentPage, setCurrentPage] = useState<'home' | 'biography'>('home')
   const [currentPhrase, setCurrentPhrase] = useState(0)
+  const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null)
 
   const phrases = useMemo(() => [
     "Desde 2002 cutucando feridas",
@@ -49,7 +75,8 @@ function App() {
         name: item.name, 
         type: 'Zine' as MediaType, 
         path: item.path,
-        cover: item.cover || PLACEHOLDER_COVER // Use provided cover or placeholder
+        cover: item.cover || PLACEHOLDER_COVER,
+        synopsis: item.synopsis // Added mapping for synopsis
       }))
     
     // Process data.livros from data.json
@@ -57,7 +84,8 @@ function App() {
       name: item.name, 
       type: 'Livro' as MediaType, 
       path: item.path,
-      cover: item.cover || PLACEHOLDER_COVER // Use provided cover or placeholder
+      cover: item.cover || PLACEHOLDER_COVER,
+      synopsis: item.synopsis // Added mapping for synopsis
     }))
     
     return [...docs, ...livros]
@@ -103,23 +131,34 @@ function App() {
             {livros.length > 0 && (
               <section>
                 <div className="section-header">
-                  <h2>Biblioteca Digital</h2>
+                  <h2>Indicações de Leitura</h2>
                   <span className="card-tag">{livros.length} itens</span>
                 </div>
                 <div className="grid">
                   {livros.map((livro, i) => (
-                    <a key={i} href={livro.path} className="media-card" target="_blank" rel="noopener noreferrer">
-                      <img src={livro.cover} alt={`Capa de ${livro.name}`} className="media-cover" />
+                    <div 
+                      key={i} 
+                      className="media-card" 
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setSelectedItem(livro)}
+                    >
+                      {livro.cover && livro.cover !== PLACEHOLDER_COVER ? (
+                        <img src={livro.cover} alt={`Capa de ${livro.name}`} className="media-cover" />
+                      ) : (
+                        <div style={getBookCoverStyle(livro.name)}>
+                          {livro.name.replace('.pdf', '')}
+                        </div>
+                      )}
                       <div className="media-info">
                         <span className="card-tag livro-tag">Livro</span>
                         <div className="media-title">{livro.name.replace('.pdf', '')}</div>
                         <div className="media-footer">
                           <span>PDF</span>
                           <span>•</span>
-                          <span>Download disponível</span>
+                          <span>Apenas divulgação</span>
                         </div>
                       </div>
-                    </a>
+                    </div>
                   ))}
                 </div>
               </section>
@@ -134,7 +173,13 @@ function App() {
                 <div className="grid">
                   {zines.map((zine, i) => (
                     <a key={i} href={zine.path} className="media-card" target="_blank" rel="noopener noreferrer">
-                      <img src={zine.cover} alt={`Capa de ${zine.name}`} className="media-cover" />
+                      {zine.cover && zine.cover !== PLACEHOLDER_COVER ? (
+                        <img src={zine.cover} alt={`Capa de ${zine.name}`} className="media-cover" />
+                      ) : (
+                        <div style={{...getBookCoverStyle(zine.name), backgroundColor: '#333'}}>
+                          {zine.name.replace('.pdf', '')}
+                        </div>
+                      )}
                       <div className="media-info">
                         <span className="card-tag zine-tag">Zine</span>
                         <div className="media-title">{zine.name}</div>
@@ -271,6 +316,38 @@ function App() {
       )}
 
       {currentPage === 'home' ? renderHome() : renderBiography()}
+
+      {selectedItem && (
+        <div className="modal-overlay" onClick={() => setSelectedItem(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelectedItem(null)}>&times;</button>
+            <div className="modal-body">
+              <div className="modal-preview">
+                {selectedItem.cover && selectedItem.cover !== PLACEHOLDER_COVER ? (
+                  <img src={selectedItem.cover} alt={selectedItem.name} />
+                ) : (
+                  <div style={getBookCoverStyle(selectedItem.name)}>
+                    {selectedItem.name.replace('.pdf', '')}
+                  </div>
+                )}
+              </div>
+              <div className="modal-info-full">
+                <span className="card-tag">{selectedItem.type}</span>
+                <h2>{selectedItem.name.replace('.pdf', '')}</h2>
+                <div className="synopsis">
+                  <h3>Sinopse / Descrição</h3>
+                  <p>{selectedItem.synopsis || "Sinopse em breve. Este livro faz parte do nosso acervo de indicações de leitura para divulgação de conhecimento e cultura."}</p>
+                </div>
+                {selectedItem.type === 'Zine' && (
+                  <a href={selectedItem.path} target="_blank" rel="noopener noreferrer" className="download-btn">
+                    Ler Documento Original
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer>
         <div className="global-container">
