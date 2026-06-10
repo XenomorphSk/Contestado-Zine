@@ -20,7 +20,6 @@ interface FriendItem {
 }
 
 const PLACEHOLDER_COVER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300' fill='%23e0e0e0'%3E%3Crect width='200' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%239e9e9e'%3ENo Cover%3C/text%3E%3C/svg%3E";
-const PLACEHOLDER_FRIEND_IMAGE = "https://via.placeholder.com/50?text=Amigo"; // Generic placeholder for friend images
 const DEFAULT_LOGO_ALT = "Logo Contestadozine"; // Alt text for the main logo
 
 const getBookCoverStyle = (name: string) => {
