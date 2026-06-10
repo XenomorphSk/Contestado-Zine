@@ -103,12 +103,7 @@ function App() {
   const livros = filteredMedia.filter(m => m.type === 'Livro')
 
   // Placeholder for "Nossos Amigos"
-  const friends: FriendItem[] = [
-    { name: "João Silva", url: "#", image: PLACEHOLDER_FRIEND_IMAGE },
-    { name: "Maria Oliveira", url: "#", image: PLACEHOLDER_FRIEND_IMAGE },
-    { name: "Pedro Souza", url: "#", image: PLACEHOLDER_FRIEND_IMAGE },
-    { name: "Ana Costa", url: "#", image: PLACEHOLDER_FRIEND_IMAGE },
-  ];
+  const friends: FriendItem[] = [];
 
   const renderHome = () => (
     <>
@@ -116,15 +111,24 @@ function App() {
         <div className="main-layout">
           {/* Sidebar - Nossos Amigos */}
           <aside className="sidebar">
-            <h3>Nossos Amigos</h3>
-            <ul>
-              {friends.map((friend, i) => (
-                <li key={i}>
-                  <img src={friend.image} alt={friend.name} />
-                  <a href={friend.url} target="_blank" rel="noopener noreferrer">{friend.name}</a>
-                </li>
-              ))}
-            </ul>
+            {friends.length > 0 && (
+              <>
+                <h3>Nossos Amigos</h3>
+                <ul>
+                  {friends.map((friend, i) => (
+                    <li key={i}>
+                      <img src={friend.image} alt={friend.name} />
+                      <a href={friend.url} target="_blank" rel="noopener noreferrer">{friend.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {friends.length === 0 && (
+              <div style={{ color: 'var(--text-light)', fontStyle: 'italic', fontSize: '0.9rem' }}>
+                Espaço reservado para amigos e parceiros.
+              </div>
+            )}
           </aside>
 
           <div className="main-content">
@@ -172,7 +176,12 @@ function App() {
                 </div>
                 <div className="grid">
                   {zines.map((zine, i) => (
-                    <a key={i} href={zine.path} className="media-card" target="_blank" rel="noopener noreferrer">
+                    <div 
+                      key={i} 
+                      className="media-card" 
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setSelectedItem(zine)}
+                    >
                       {zine.cover && zine.cover !== PLACEHOLDER_COVER ? (
                         <img src={zine.cover} alt={`Capa de ${zine.name}`} className="media-cover" />
                       ) : (
@@ -186,10 +195,10 @@ function App() {
                         <div className="media-footer">
                           <span>{zine.name.split('.').pop()?.toUpperCase()}</span>
                           <span>•</span>
-                          <span>Arquivo Original</span>
+                          <span>Leitura Direta</span>
                         </div>
                       </div>
-                    </a>
+                    </div>
                   ))}
                 </div>
               </section>
@@ -319,29 +328,44 @@ function App() {
 
       {selectedItem && (
         <div className="modal-overlay" onClick={() => setSelectedItem(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <div className={`modal-content ${selectedItem.type === 'Zine' ? 'modal-large' : ''}`} onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelectedItem(null)}>&times;</button>
             <div className="modal-body">
-              <div className="modal-preview">
-                {selectedItem.cover && selectedItem.cover !== PLACEHOLDER_COVER ? (
-                  <img src={selectedItem.cover} alt={selectedItem.name} />
-                ) : (
-                  <div style={getBookCoverStyle(selectedItem.name)}>
-                    {selectedItem.name.replace('.pdf', '')}
-                  </div>
-                )}
-              </div>
+              {selectedItem.type === 'Zine' ? (
+                <div className="pdf-viewer-container">
+                  <iframe 
+                    src={`${selectedItem.path}#toolbar=0&navpanes=0`} 
+                    title={selectedItem.name}
+                    width="100%" 
+                    height="100%"
+                    style={{ border: 'none' }}
+                  />
+                </div>
+              ) : (
+                <div className="modal-preview">
+                  {selectedItem.cover && selectedItem.cover !== PLACEHOLDER_COVER ? (
+                    <img src={selectedItem.cover} alt={selectedItem.name} />
+                  ) : (
+                    <div style={getBookCoverStyle(selectedItem.name)}>
+                      {selectedItem.name.replace('.pdf', '')}
+                    </div>
+                  )}
+                </div>
+              )}
+              
               <div className="modal-info-full">
                 <span className="card-tag">{selectedItem.type}</span>
                 <h2>{selectedItem.name.replace('.pdf', '')}</h2>
                 <div className="synopsis">
-                  <h3>Sinopse / Descrição</h3>
-                  <p>{selectedItem.synopsis || "Sinopse em breve. Este livro faz parte do nosso acervo de indicações de leitura para divulgação de conhecimento e cultura."}</p>
+                  <h3>{selectedItem.type === 'Zine' ? 'Informações' : 'Sinopse / Descrição'}</h3>
+                  <p>{selectedItem.synopsis || (selectedItem.type === 'Zine' ? "Edição original do Contestado Zine disponível para leitura direta." : "Sinopse em breve. Este livro faz parte do nosso acervo de indicações de leitura para divulgação de conhecimento e cultura.")}</p>
                 </div>
                 {selectedItem.type === 'Zine' && (
-                  <a href={selectedItem.path} target="_blank" rel="noopener noreferrer" className="download-btn">
-                    Ler Documento Original
-                  </a>
+                  <div style={{ marginTop: '1rem' }}>
+                    <small style={{ color: 'var(--text-light)' }}>
+                      Nota: Role o visualizador acima para ler o conteúdo completo.
+                    </small>
+                  </div>
                 )}
               </div>
             </div>
