@@ -337,7 +337,7 @@ function App() {
               {selectedItem.type === 'Zine' ? (
                 <div className="pdf-viewer-container">
                   <iframe 
-                    src={`${selectedItem.path}#toolbar=0&navpanes=0`} 
+                    src={`${encodeURI(selectedItem.path)}#toolbar=0&navpanes=0`} 
                     title={selectedItem.name}
                     width="100%" 
                     height="100%"
