@@ -333,7 +333,7 @@ function App() {
               {selectedItem.type === 'Zine' ? (
                 <div className="pdf-viewer-container">
                   <iframe 
-                    src={encodeURI(`${window.location.origin}${import.meta.env.BASE_URL}${selectedItem.path.replace(/^\//, '')}#toolbar=0&navpanes=0`)}
+                    src={`${import.meta.env.BASE_URL}${selectedItem.path.replace(/^\//, '')}#toolbar=0&navpanes=0`}
                     title={selectedItem.name}
                     width="100%" 
                     height="100%"
