@@ -67,24 +67,28 @@ function App() {
   }, [phrases.length])
 
   const allMedia: MediaItem[] = useMemo(() => {
+    const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
+      ? import.meta.env.BASE_URL 
+      : `${import.meta.env.BASE_URL}/`;
+
     // Process data.docs from data.json
     const docs = data.docs
       .filter((item: any) => item.path.endsWith('.pdf')) // Ensure only PDFs are indexed as Zines
       .map((item: any) => ({ 
         name: item.name, 
         type: 'Zine' as MediaType, 
-        path: item.path,
+        path: `${baseUrl}${item.path.replace(/^\//, '')}`,
         cover: item.cover || PLACEHOLDER_COVER,
-        synopsis: item.synopsis // Added mapping for synopsis
+        synopsis: item.synopsis 
       }))
     
     // Process data.livros from data.json
     const livros = data.livros.map((item: any) => ({ 
       name: item.name, 
       type: 'Livro' as MediaType, 
-      path: item.path,
+      path: `${baseUrl}${item.path.replace(/^\//, '')}`,
       cover: item.cover || PLACEHOLDER_COVER,
-      synopsis: item.synopsis // Added mapping for synopsis
+      synopsis: item.synopsis 
     }))
     
     return [...docs, ...livros]
