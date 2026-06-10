@@ -77,7 +77,7 @@ function App() {
       .map((item: any) => ({ 
         name: item.name, 
         type: 'Zine' as MediaType, 
-        path: `${baseUrl}${item.path.replace(/^\//, '')}`,
+        path: item.path.startsWith('assets/') ? item.path : `assets/docs/${item.name}`,
         cover: item.cover || PLACEHOLDER_COVER,
         synopsis: item.synopsis 
       }))
@@ -86,7 +86,7 @@ function App() {
     const livros = data.livros.map((item: any) => ({ 
       name: item.name, 
       type: 'Livro' as MediaType, 
-      path: `${baseUrl}${item.path.replace(/^\//, '')}`,
+      path: item.path.startsWith('assets/') ? item.path : `assets/livros/${item.name}`,
       cover: item.cover || PLACEHOLDER_COVER,
       synopsis: item.synopsis 
     }))
@@ -337,7 +337,7 @@ function App() {
               {selectedItem.type === 'Zine' ? (
                 <div className="pdf-viewer-container">
                   <iframe 
-                    src={`${encodeURI(selectedItem.path)}#toolbar=0&navpanes=0`} 
+                    src={`${import.meta.env.BASE_URL}${selectedItem.path}#toolbar=0&navpanes=0`} 
                     title={selectedItem.name}
                     width="100%" 
                     height="100%"
